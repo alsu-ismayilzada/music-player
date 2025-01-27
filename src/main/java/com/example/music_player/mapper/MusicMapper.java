@@ -6,7 +6,7 @@ import com.example.music_player.payload.response.MusicResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface MusicMapper {
 
     Music toMusicEntity(MusicRequest request);

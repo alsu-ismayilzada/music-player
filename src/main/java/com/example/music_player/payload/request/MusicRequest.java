@@ -15,6 +15,8 @@ public class MusicRequest {
 
     private String genre;
 
+    private byte[] poster;
+
     @NotNull(message = "Duration must not be empty")
     private int duration;
 

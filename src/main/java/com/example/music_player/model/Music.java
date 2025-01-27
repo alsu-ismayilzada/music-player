@@ -26,7 +26,7 @@ public class Music {
     Album album;
     String genre;
     String path;
-    String poster;
+    byte[] poster;
     int duration;
 
 }
