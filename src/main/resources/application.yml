@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/music_player_db
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: false
+    open-in-view: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+app:
+  api_base_url: /v1
+  jwt-secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+  jwt-refresh-secret: IPA32lUb6_SJpWJONVmYPMtzYcXRab1QI3EziPzU4pU
+  jwt-expiration: 7200000
+  jwt-refresh-expiration: 840000
