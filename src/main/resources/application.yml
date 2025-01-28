@@ -8,10 +8,26 @@ spring:
     open-in-view: true
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 app:
   api_base_url: /v1
   jwt-secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
   jwt-refresh-secret: IPA32lUb6_SJpWJONVmYPMtzYcXRab1QI3EziPzU4pU
   jwt-expiration: 7200000
   jwt-refresh-expiration: 840000
+
+springdoc:
+  api-docs:
+    groups:
+      enabled: true
+  group-configs:
+    - group: User Authentication API
+      display-name: User Authentication API
+      paths-to-match: /v1/auth/**
+      packages-to-scan:
+        - "com.example.music_player.auth"
+    - group: Music Player API
+      display-name: Music Player API
+      paths-to-match: /v1/**
+      packages-to-scan:
+        - "com.example.music_player"

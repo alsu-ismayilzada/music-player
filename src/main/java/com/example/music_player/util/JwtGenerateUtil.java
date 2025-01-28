@@ -25,6 +25,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtGenerateUtil implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 5357760619749295601L;
     private static final String ROLES_CLAIM_NAME = "roles";
