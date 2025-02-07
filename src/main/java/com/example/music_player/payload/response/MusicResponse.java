@@ -12,6 +12,7 @@ public class MusicResponse {
    private Album album;
    private String genre;
    private String path;
+   private String file;
    private byte[] poster;
    private int duration;
 }

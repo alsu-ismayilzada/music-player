@@ -1,7 +1,11 @@
 package com.example.music_player.payload.request;
 
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
+@Data
 public class MusicRequest {
 
     @NotNull(message = "Title must not be empty")
@@ -12,6 +16,9 @@ public class MusicRequest {
 
     @NotNull(message = "Album must not be empty")
     private Long album;
+
+    @Transient
+    private MultipartFile file;
 
     private String genre;
 

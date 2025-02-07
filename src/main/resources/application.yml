@@ -8,7 +8,12 @@ spring:
     open-in-view: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
 app:
   api_base_url: /v1
   jwt-secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
@@ -31,3 +36,9 @@ springdoc:
       paths-to-match: /v1/**
       packages-to-scan:
         - "com.example.music_player"
+aws:
+  s3:
+    access-key: AKIAW5WU5IZ4EKCDKR6P
+    secret-key: 9mrlj+oiRoJ5/7W9XO0E1UlJxN+lexBS9CdVcHTn
+    region: eu-north-1
+    bucket-name: mymusicsbucket

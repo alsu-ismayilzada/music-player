@@ -6,6 +6,7 @@ import com.example.music_player.payload.request.MusicSearchRequest;
 import com.example.music_player.payload.response.MusicResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface MusicService {
     MusicResponse getMusicById(Long id);
     Page<MusicResponse> searchMusics(MusicSearchRequest request, Pageable pageable);
     MusicResponse createMusic(MusicRequest musicRequest);
+    MusicResponse downloadMusic(String path);
     MusicResponse updateMusic(Long id, MusicRequest musicRequest);
     void deleteMusicById(Long id);
 }

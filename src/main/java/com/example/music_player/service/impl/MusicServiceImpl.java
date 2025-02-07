@@ -8,6 +8,7 @@ import com.example.music_player.payload.request.MusicSearchRequest;
 import com.example.music_player.payload.response.MusicResponse;
 import com.example.music_player.repository.MusicRepository;
 import com.example.music_player.service.MusicService;
+import com.example.music_player.service.S3Service;
 import com.example.music_player.specification.MusicSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class MusicServiceImpl implements MusicService {
     private final MusicMapper musicMapper;
     private final MusicSpecification musicSpecification;
     private final UserMapper userMapper;
+    private final S3Service s3Service;
 
     @Override
     public Music findById(Long id){
@@ -50,9 +53,20 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public MusicResponse createMusic(MusicRequest musicRequest) {
+        var musicPath = s3Service.uploadFile(musicRequest.getFile());
         var music = musicMapper.toMusicEntity(musicRequest);
+        music.setPath(musicPath);
         musicRepository.save(music);
         return musicMapper.toMusicResponse(music);
+    }
+
+    @Override
+    public MusicResponse downloadMusic(String path) {
+        var file = s3Service.downloadFile(path);
+        var music = musicRepository.findByPath(path).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Data not found"));
+        var response = musicMapper.toMusicResponse(music);
+        response.setPath(file);
+        return response;
     }
 
     @Override

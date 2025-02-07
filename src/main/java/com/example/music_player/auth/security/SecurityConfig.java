@@ -69,13 +69,15 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "v3/api-docs/**",
             "*/swagger-ui/**",
-            "swagger-ui/**"
+            "swagger-ui/**",
+            "/albums/**",
+            "/musics/**"
     };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(AUTH_WHITELIST).permitAll());
-//        http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/**").fullyAuthenticated());
+//        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(AUTH_WHITELIST).permitAll());
+        http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/**").permitAll());
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(Customizer.withDefaults());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

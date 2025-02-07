@@ -9,8 +9,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -44,9 +46,19 @@ public class MusicController {
             @ApiResponse(responseCode = "201", description = "Successfully created"),
             @ApiResponse(responseCode = "404", description = "Not created")
     })
-    @PostMapping()
-    public ResponseEntity<MusicResponse> createMusic(@RequestBody MusicRequest musicRequest) {
+    @PostMapping(consumes =  "multipart/form-data")
+    public ResponseEntity<MusicResponse> createMusic(@RequestParam("file") MultipartFile file, MusicRequest musicRequest) {
+        musicRequest.setFile(file);
         return new ResponseEntity<>(musicService.createMusic(musicRequest), CREATED);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully downloaded"),
+            @ApiResponse(responseCode = "404", description = "Not downloaded")
+    })
+    @GetMapping(value = "/download")
+    public MusicResponse downloadMusic(@RequestParam("path") String path){
+        return musicService.downloadMusic(path);
     }
 
     @ApiResponses(value = {
