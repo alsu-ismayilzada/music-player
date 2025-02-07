@@ -1,5 +1,6 @@
 package com.example.music_player.service.impl;
 
+import com.example.music_player.MusicPlayerApplication;
 import com.example.music_player.mapper.AlbumMapper;
 import com.example.music_player.model.Album;
 import com.example.music_player.payload.request.AlbumRequest;
@@ -21,6 +22,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     private final AlbumRepository albumRepository;
     private final AlbumMapper albumMapper;
+    private final MusicPlayerApplication musicPlayerApplication;
 
     @Override
     public Album findById(Long id) {
