@@ -8,6 +8,7 @@ import com.example.music_player.payload.request.MusicSearchRequest;
 import com.example.music_player.payload.response.MusicResponse;
 import com.example.music_player.repository.MusicRepository;
 import com.example.music_player.service.MusicService;
+import com.example.music_player.service.PlayListService;
 import com.example.music_player.service.S3Service;
 import com.example.music_player.specification.MusicSpecification;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

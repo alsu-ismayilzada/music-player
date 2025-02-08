@@ -12,8 +12,10 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.zip.GZIPOutputStream;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +46,8 @@ public class S3ServiceImpl implements S3Service {
     }
 
     @Override
-    public String downloadFile(String fileName) {
+    public String downloadFile(String path) {
+        var fileName = "mp3/" + extractFileName(path);
         try {
             GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                     .bucket(bucketName)
@@ -54,9 +57,19 @@ public class S3ServiceImpl implements S3Service {
             ResponseInputStream<GetObjectResponse> s3ObjectResponse = s3Client.getObject(getObjectRequest);
             byte[] content = s3ObjectResponse.readAllBytes();
 
-            return Base64.getEncoder().encodeToString(content);
+            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+            try (GZIPOutputStream gzipStream = new GZIPOutputStream(byteStream)) {
+                gzipStream.write(content);
+            }
+
+            return Base64.getEncoder().encodeToString(byteStream.toByteArray());
         } catch (Exception e) {
             throw new RuntimeException("Failed to download file: " + fileName, e);
         }
     }
+
+    public String extractFileName(String path) {
+        return path.substring(path.lastIndexOf("/") + 1);
+    }
+
 }

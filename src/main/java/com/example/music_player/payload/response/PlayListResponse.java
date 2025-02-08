@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class PlayListResponse {
 
+    Long id;
     private String title;
     private List<Music> musics;
 }

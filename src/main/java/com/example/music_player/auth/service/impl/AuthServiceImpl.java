@@ -36,15 +36,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthResponse userLogin(String token) {
+    public User userLogin(String token) {
         try {
             var decodedAccessToken = jwtGenerateUtil.decodeAccessToken(token);
             var email = decodedAccessToken.mail();
             var userOptional = userRepository.findByEmail(email);
 
             if (userOptional.isPresent()) {
-                var user = userOptional.get();
-                return getAuthResponse(user.getId(), user.getEmail(), user.getRoles());
+                return userOptional.get();
             } else {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
             }

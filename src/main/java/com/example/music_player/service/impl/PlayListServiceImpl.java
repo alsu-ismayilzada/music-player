@@ -49,6 +49,7 @@ public class PlayListServiceImpl implements PlayListService {
     public PlayListResponse updatePlayList(Long id, PlayListRequest request) {
         var playList = findById(id);
         playListMapper.updatePlayList(request, playList);
+        playListRepository.save(playList);
         return playListMapper.toPlayListResponse(playList);
     }
 }
