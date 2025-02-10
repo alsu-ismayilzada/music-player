@@ -8,7 +8,6 @@ import com.example.music_player.payload.request.MusicSearchRequest;
 import com.example.music_player.payload.response.MusicResponse;
 import com.example.music_player.repository.MusicRepository;
 import com.example.music_player.service.MusicService;
-import com.example.music_player.service.PlayListService;
 import com.example.music_player.service.S3Service;
 import com.example.music_player.specification.MusicSpecification;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +50,7 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public MusicResponse createMusic(MusicRequest musicRequest) {
-        var musicPath = s3Service.uploadFile(musicRequest.getFile());
+        var musicPath = s3Service.uploadMP3(musicRequest.getFile());
         var music = musicMapper.toMusicEntity(musicRequest);
         music.setPath(musicPath);
         musicRepository.save(music);
@@ -60,7 +59,7 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public MusicResponse downloadMusic(String path) {
-        var file = s3Service.downloadFile(path);
+        var file = s3Service.downloadMp3(path);
         var music = musicRepository.findByPath(path).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Data not found"));
         var response = musicMapper.toMusicResponse(music);
         response.setPath(file);

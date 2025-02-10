@@ -4,7 +4,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface S3Service {
 
-    String uploadFile(MultipartFile file);
+    String uploadMP3(MultipartFile file);
 
-    String downloadFile(String fileName);
+    String downloadMp3(String fileName);
+
+    String uploadPoster(MultipartFile file);
+
+    String downloadPoster(String path);
 }
