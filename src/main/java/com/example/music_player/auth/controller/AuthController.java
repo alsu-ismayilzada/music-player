@@ -4,6 +4,7 @@ import com.example.music_player.auth.payload.request.AuthRequest;
 import com.example.music_player.auth.payload.request.AuthResponse;
 import com.example.music_player.auth.service.AuthService;
 import com.example.music_player.model.User;
+import com.example.music_player.payload.response.UserResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Invalid credentials")
     })
     @PostMapping("/login")
-    public ResponseEntity<User> userLogin(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<UserResponse> userLogin(@RequestHeader("Authorization") String token) {
         return new ResponseEntity<>(authService.userLogin(token), OK);
     }
 

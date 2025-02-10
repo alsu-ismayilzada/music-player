@@ -7,6 +7,7 @@ import com.example.music_player.auth.record.DecodedRefreshToken;
 import com.example.music_player.auth.service.AuthService;
 import com.example.music_player.mapper.UserMapper;
 import com.example.music_player.model.User;
+import com.example.music_player.payload.response.UserResponse;
 import com.example.music_player.repository.UserRepository;
 import com.example.music_player.util.JwtGenerateUtil;
 import lombok.RequiredArgsConstructor;
@@ -36,14 +37,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User userLogin(String token) {
+    public UserResponse userLogin(String token) {
         try {
             var decodedAccessToken = jwtGenerateUtil.decodeAccessToken(token);
             var email = decodedAccessToken.mail();
             var userOptional = userRepository.findByEmail(email);
 
             if (userOptional.isPresent()) {
-                return userOptional.get();
+                return userMapper.toUserResponse(userOptional.get());
             } else {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
             }
